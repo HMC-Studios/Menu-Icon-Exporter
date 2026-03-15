@@ -18,6 +18,24 @@ const DEFAULT_EXPORT_PREFS = Object.freeze({
     output_folder: ''
 });
 let cachedExportPrefsText = '';
+const PLUGIN_WEBSITE = 'https://github.com/HMC-Studios/Menu-Icon-Exporter';
+const PLUGIN_REPOSITORY = 'https://github.com/HMC-Studios/Menu-Icon-Exporter';
+const PLUGIN_BUG_TRACKER = 'https://github.com/HMC-Studios/Menu-Icon-Exporter/issues';
+const PLUGIN_ABOUT = `Export Blockbench models as PNG icons with stable camera framing and fast export actions.
+
+![Menu Icon Exporter Preview](https://raw.githubusercontent.com/HMC-Studios/Menu-Icon-Exporter/main/images/plugin_example.png)
+
+### Highlights
+- Auto-frame model with stable reset behavior
+- Manual camera controls (zoom, pan, rotate X/Y/Z)
+- Live preview while adjusting controls
+- 16/32/48/64/128 presets plus custom size
+- Transparent, solid, or custom background color
+- Export quality multipliers (4x, 8x, 16x)
+- Save mode options (ask each time or auto-save folder)
+
+PNG output works across Blockbench formats and platforms.
+Platform-specific size, naming, and folder rules still apply.`;
 
 // =========================
 // Export preferences
@@ -71,8 +89,12 @@ Plugin.register('menu_icon_exporter', {
     author: 'NET',
     description: 'Export perfect menu/item icons with advanced camera controls',
     icon: PLUGIN_BROWSER_ICON,
-    about: 'https://raw.githubusercontent.com/HMC-Studios/Menu-Icon-Exporter/main/about.md',
+    about: PLUGIN_ABOUT,
+    website: PLUGIN_WEBSITE,
+    repository: PLUGIN_REPOSITORY,
+    bug_tracker: PLUGIN_BUG_TRACKER,
     version: '3.1.0',
+    min_version: '4.8.0',
     variant: 'both',
     tags: ['Utility', 'Export', 'Screenshot'],
     
