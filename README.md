@@ -32,7 +32,7 @@ Version: 1.0.0
 
 ### Manual Installation
 
-1. Download `menu_icon_exporter.js` and `icon.png`.
+1. Download `menu_icon_exporter.js` and `menu-icon-exporter.svg`.
 2. Keep both files in the same folder.
 3. In Blockbench, go to `File -> Plugins -> Load Plugin from File`.
 4. Select `menu_icon_exporter.js`.

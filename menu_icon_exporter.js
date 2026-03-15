@@ -2,7 +2,7 @@
 // Plugin state
 // =========================
 let iconExporterAction;
-const PLUGIN_BROWSER_ICON = 'icon.png';
+const PLUGIN_BROWSER_ICON = 'menu-icon-exporter.svg';
 const ACTION_ICON = 'photo_camera';
 const ACTION_ICON_16 = 'photo_size_select_small';
 const ACTION_ICON_64 = 'photo_size_select_large';
