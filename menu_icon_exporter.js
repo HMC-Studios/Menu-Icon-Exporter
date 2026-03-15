@@ -41,7 +41,33 @@ Platform-specific size, naming, and folder rules still apply.`;
 // Export preferences
 // =========================
 function canUseAppFileSystem() {
-    return typeof require === 'function';
+    return typeof require === 'function' || typeof requireNativeModule === 'function';
+}
+
+function isBlockbench5OrNewer() {
+    return typeof Blockbench !== 'undefined' &&
+        typeof Blockbench.isNewerThan === 'function' &&
+        Blockbench.isNewerThan('4.99');
+}
+
+function getNativeModule(moduleName, options = null) {
+    let moduleRef = null;
+
+    if (typeof requireNativeModule === 'function') {
+        try {
+            moduleRef = options ? requireNativeModule(moduleName, options) : requireNativeModule(moduleName);
+        } catch (error) {
+        }
+    }
+
+    if (!moduleRef && typeof require === 'function') {
+        try {
+            moduleRef = require(moduleName);
+        } catch (error) {
+        }
+    }
+
+    return moduleRef;
 }
 
 function normalizeExportPrefs(source = {}) {
@@ -158,6 +184,10 @@ function getToolbarIconDataUrl() {
         return cachedToolbarIconDataUrl;
     }
 
+    if (isBlockbench5OrNewer()) {
+        return null;
+    }
+
     if (typeof Plugins === 'undefined' || !Plugins || !Array.isArray(Plugins.all)) {
         return null;
     }
@@ -173,14 +203,7 @@ function getToolbarIconDataUrl() {
     }
 
     let cleanPath = iconPath.split('?')[0];
-    let fsModule = null;
-    if (typeof require === 'function') {
-        try {
-            fsModule = require('fs');
-        } catch (error) {
-            return null;
-        }
-    }
+    let fsModule = getNativeModule('fs');
     if (!fsModule || !fsModule.existsSync(cleanPath)) {
         return null;
     }
@@ -2111,12 +2134,20 @@ function writeDataUrlToOutputFolder(dataURL, outputFolder, filename) {
         throw new Error('Auto-save is only available in the desktop app');
     }
 
-    let fsModule = require('fs');
-    let pathModule = require('path');
     let folderPath = typeof outputFolder === 'string' ? outputFolder.trim() : '';
-
     if (!folderPath) {
         throw new Error('No output folder selected');
+    }
+    let fsModule = getNativeModule('fs', {
+        scope: folderPath,
+        message: 'This permission is required to save exported icons to your selected output folder.'
+    });
+    let pathModule = getNativeModule('path');
+    if (!fsModule) {
+        throw new Error('File system permission was denied');
+    }
+    if (!pathModule) {
+        throw new Error('Path module is unavailable');
     }
     if (!fsModule.existsSync(folderPath)) {
         throw new Error('Selected output folder does not exist');
