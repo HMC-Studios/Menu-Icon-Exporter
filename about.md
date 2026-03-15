@@ -2,7 +2,7 @@
 
 exports your blockbench models as icons with full camera control.
 
-![Menu Icon Exporter Preview](images/plugin_example.png)
+![Menu Icon Exporter Preview](https://raw.githubusercontent.com/HMC-Studios/Menu-Icon-Exporter/main/images/plugin_example.png)
 
 ## what it does
 

@@ -132,10 +132,9 @@ Plugin.register('menu_icon_exporter', {
         MenuBar.addAction(this.quickExport64Action, 'file.export');
 
         let toolbarIconDataUrl = getToolbarIconDataUrl();
-        if (toolbarIconDataUrl) {
-            this.iconExporterAction.setIcon(toolbarIconDataUrl);
-            this.quickExport16Action.setIcon(toolbarIconDataUrl);
-            this.quickExport64Action.setIcon(toolbarIconDataUrl);
+        let mainActionIcon = toolbarIconDataUrl || PLUGIN_BROWSER_ICON;
+        if (mainActionIcon) {
+            this.iconExporterAction.setIcon(mainActionIcon);
         }
     },
     
