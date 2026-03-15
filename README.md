@@ -2,7 +2,7 @@
 
 Export Blockbench models as clean menu or item icons with stable camera framing, live preview, and flexible save options.
 
-Version: 3.1.0
+Version: 1.0.0
 
 ![Menu Icon Exporter Preview](images/plugin_example.png)
 

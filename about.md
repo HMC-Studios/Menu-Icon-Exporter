@@ -1,47 +1,28 @@
 # Menu Icon Exporter
 
-exports your blockbench models as icons with full camera control.
+Export Blockbench models as PNG icons with stable camera framing, live preview, and full manual camera controls.
 
 ![Menu Icon Exporter Preview](https://raw.githubusercontent.com/HMC-Studios/Menu-Icon-Exporter/main/images/plugin_example.png)
 
-## what it does
+## Highlights
 
-- auto frames your model 
-- manual camera controls (zoom, pan, rotate on all axes)
-- export in different sizes (16x16 up to 128x128 or custom)
-- live preview so you see what youre getting
-- quick export buttons for common sizes
+- Auto-frame model with stable reset behavior
+- Manual camera controls: zoom, rotate X/Y/Z, pan X/Y
+- Size presets: 16, 32, 48, 64, 128, plus custom
+- Background options: transparent, white, black, gray, custom color
+- Export quality options: Standard (4x), High (8x), Ultra (16x)
+- Quick export actions for 16x16 and 64x64 icons
+- Save mode options for ask-each-time or auto-save folder
 
-## how to use it
+## Usage
 
-**main export**: File → Export → Export Menu Icon (or Ctrl+Shift+I)
-**quick 16x16**: File → Export → Quick Export 16×16 Icon
-**quick 64x64**: File → Export → Quick Export 64×64 Icon
+Main export: File -> Export -> Export Menu Icon (Ctrl+Shift+I)
+Quick 16x16: File -> Export -> Quick Export 16x16 Icon
+Quick 64x64: File -> Export -> Quick Export 64x64 Icon
 
-## controls
+## Notes
 
-- **zoom**: 0.5x to 3.0x distance
-- **pan**: move the model left/right and up/down
-- **rotate x**: flips the model 
-- **rotate y**: spins like a top
-- **rotate z**: rolls the model
-- **reset camera**: puts everything back to auto frame (only works after you move stuff)
-
-## export options
-
-- sizes: 16x16, 32x32, 48x48, 64x64, 128x128, or custom
-- background: transparent, white, black, gray, or pick your own color
-- quality: standard (4x), high (8x), ultra (16x) - higher = sharper but slower
-- filename: automatically removes .geo from your project name
-
-## tips
-
-- 16x16 or 32x32 for minecraft items
-- transparent background for game textures
-- use auto frame checkbox to recenter fast
-- all camera controls update live in the preview
-
-outputs png icons that work across blockbench formats and platforms.
-platform-specific size, naming, and folder rules still apply.
+PNG output works across Blockbench formats and platforms.
+Platform-specific size, naming, and folder rules still apply.
 
 by NET

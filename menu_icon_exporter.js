@@ -93,10 +93,10 @@ Plugin.register('menu_icon_exporter', {
     website: PLUGIN_WEBSITE,
     repository: PLUGIN_REPOSITORY,
     bug_tracker: PLUGIN_BUG_TRACKER,
-    version: '3.1.0',
-    min_version: '4.8.0',
+    version: '1.0.0',
+    min_version: '4.7.0',
     variant: 'both',
-    tags: ['Utility', 'Export', 'Screenshot'],
+    tags: ['Minecraft', 'Utility', 'Export'],
     
     onload() {
         this.iconExporterAction = new Action('export_menu_icon', {
