@@ -158,9 +158,13 @@ Plugin.register('menu_icon_exporter', {
         MenuBar.addAction(this.quickExport64Action, 'file.export');
 
         let toolbarIconDataUrl = getToolbarIconDataUrl();
-        let mainActionIcon = toolbarIconDataUrl || PLUGIN_BROWSER_ICON;
-        if (mainActionIcon) {
-            this.iconExporterAction.setIcon(mainActionIcon);
+        if (toolbarIconDataUrl) {
+            this.iconExporterAction.setIcon(toolbarIconDataUrl);
+        } else {
+            let runtimeIconPath = getPluginRuntimeIconPath();
+            if (runtimeIconPath) {
+                this.iconExporterAction.setIcon(runtimeIconPath);
+            }
         }
     },
     
@@ -188,16 +192,7 @@ function getToolbarIconDataUrl() {
         return null;
     }
 
-    if (typeof Plugins === 'undefined' || !Plugins || !Array.isArray(Plugins.all)) {
-        return null;
-    }
-
-    let pluginInstance = Plugins.all.find(plugin => plugin && plugin.id === 'menu_icon_exporter');
-    if (!pluginInstance || typeof pluginInstance.getIcon !== 'function') {
-        return null;
-    }
-
-    let iconPath = pluginInstance.getIcon();
+    let iconPath = getPluginRuntimeIconPath();
     if (!iconPath || typeof iconPath !== 'string' || iconPath.startsWith('http')) {
         return null;
     }
@@ -212,6 +207,24 @@ function getToolbarIconDataUrl() {
     let encoded = fsModule.readFileSync(cleanPath).toString('base64');
     cachedToolbarIconDataUrl = `data:${mimeType};base64,${encoded}`;
     return cachedToolbarIconDataUrl;
+}
+
+function getPluginRuntimeIconPath() {
+    if (typeof Plugins === 'undefined' || !Plugins || !Array.isArray(Plugins.all)) {
+        return null;
+    }
+
+    let pluginInstance = Plugins.all.find(plugin => plugin && plugin.id === 'menu_icon_exporter');
+    if (!pluginInstance || typeof pluginInstance.getIcon !== 'function') {
+        return null;
+    }
+
+    let iconPath = pluginInstance.getIcon();
+    if (!iconPath || typeof iconPath !== 'string') {
+        return null;
+    }
+
+    return iconPath;
 }
 
 function getSelectedPreview() {
