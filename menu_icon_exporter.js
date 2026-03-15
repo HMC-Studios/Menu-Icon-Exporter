@@ -71,7 +71,7 @@ Plugin.register('menu_icon_exporter', {
     author: 'NET',
     description: 'Export perfect menu/item icons with advanced camera controls',
     icon: PLUGIN_BROWSER_ICON,
-    about: 'https://raw.githubusercontent.com/Suffix30/Menu-Icon-Exporter/main/about.md',
+    about: 'https://raw.githubusercontent.com/HMC-Studios/Menu-Icon-Exporter/main/about.md',
     version: '3.1.0',
     variant: 'both',
     tags: ['Utility', 'Export', 'Screenshot'],
