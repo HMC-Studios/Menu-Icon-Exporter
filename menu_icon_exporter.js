@@ -129,7 +129,6 @@ Plugin.register('menu_icon_exporter', {
             icon: ACTION_ICON,
             category: 'file',
             keybind: new Keybind({key: 'i', ctrl: true, shift: true}),
-            condition: () => Project && Project.elements && Project.elements.length > 0,
             click: openIconExporterDialog
         });
  
@@ -138,7 +137,6 @@ Plugin.register('menu_icon_exporter', {
             description: 'Instantly export a 16×16 icon with default settings',
             icon: ACTION_ICON_16,
             category: 'file',
-            condition: () => Project && Project.elements && Project.elements.length > 0,
             click: () => quickExportIcon(16)
         });
 
@@ -147,7 +145,6 @@ Plugin.register('menu_icon_exporter', {
             description: 'Instantly export a 64×64 icon with default settings',
             icon: ACTION_ICON_64,
             category: 'file',
-            condition: () => Project && Project.elements && Project.elements.length > 0,
             click: () => quickExportIcon(64)
         });
 
