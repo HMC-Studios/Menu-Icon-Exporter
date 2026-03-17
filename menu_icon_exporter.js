@@ -8,6 +8,7 @@ const ACTION_ICON_16 = 'photo_size_select_small';
 const ACTION_ICON_64 = 'photo_size_select_large';
 let activeResetButton = null;
 let cachedToolbarIconDataUrl = null;
+let toolbarIconDataUrlPromise = null;
 const WORLD_UP = new THREE.Vector3(0, 1, 0);
 let dialogCameraRestoreState = null;
 let dialogDefaultFramedCameraState = null;
@@ -152,15 +153,7 @@ Plugin.register('menu_icon_exporter', {
         MenuBar.addAction(this.quickExport16Action, 'file.export');
         MenuBar.addAction(this.quickExport64Action, 'file.export');
 
-        let toolbarIconDataUrl = getToolbarIconDataUrl();
-        if (toolbarIconDataUrl) {
-            this.iconExporterAction.setIcon(toolbarIconDataUrl);
-        } else {
-            let runtimeIconPath = getPluginRuntimeIconPath();
-            if (runtimeIconPath) {
-                this.iconExporterAction.setIcon(runtimeIconPath);
-            }
-        }
+        applyToolbarActionIcon(this.iconExporterAction);
     },
     
     onunload() {
@@ -204,6 +197,86 @@ function getToolbarIconDataUrl() {
     return cachedToolbarIconDataUrl;
 }
 
+function readBlobAsDataUrl(blob) {
+    return new Promise((resolve) => {
+        if (typeof FileReader === 'undefined' || !blob) {
+            resolve(null);
+            return;
+        }
+        let reader = new FileReader();
+        reader.onload = function() {
+            resolve(typeof reader.result === 'string' ? reader.result : null);
+        };
+        reader.onerror = function() {
+            resolve(null);
+        };
+        try {
+            reader.readAsDataURL(blob);
+        } catch (error) {
+            resolve(null);
+        }
+    });
+}
+
+function getToolbarIconDataUrlAsync() {
+    if (cachedToolbarIconDataUrl) {
+        return Promise.resolve(cachedToolbarIconDataUrl);
+    }
+    if (toolbarIconDataUrlPromise) {
+        return toolbarIconDataUrlPromise;
+    }
+
+    let syncIcon = getToolbarIconDataUrl();
+    if (syncIcon) {
+        return Promise.resolve(syncIcon);
+    }
+
+    let iconPath = getPluginRuntimeIconPath();
+    if (!iconPath || typeof iconPath !== 'string' || !/^https?:\/\//i.test(iconPath) || typeof fetch !== 'function') {
+        return Promise.resolve(null);
+    }
+
+    toolbarIconDataUrlPromise = fetch(iconPath, {cache: 'no-store'})
+        .then(response => {
+            if (!response || !response.ok || typeof response.blob !== 'function') {
+                return null;
+            }
+            return response.blob();
+        })
+        .then(blob => readBlobAsDataUrl(blob))
+        .then(dataUrl => {
+            if (typeof dataUrl === 'string' && dataUrl.startsWith('data:image/')) {
+                cachedToolbarIconDataUrl = dataUrl;
+                return dataUrl;
+            }
+            return null;
+        })
+        .catch(() => null)
+        .finally(() => {
+            toolbarIconDataUrlPromise = null;
+        });
+
+    return toolbarIconDataUrlPromise;
+}
+
+function applyToolbarActionIcon(action) {
+    if (!action || typeof action.setIcon !== 'function') {
+        return;
+    }
+
+    let syncIcon = getToolbarIconDataUrl();
+    if (syncIcon) {
+        action.setIcon(syncIcon);
+        return;
+    }
+
+    getToolbarIconDataUrlAsync().then(dataUrl => {
+        if (dataUrl) {
+            action.setIcon(dataUrl);
+        }
+    });
+}
+
 function getPluginRuntimeIconPath() {
     if (typeof Plugins === 'undefined' || !Plugins || !Array.isArray(Plugins.all)) {
         return null;
@@ -217,6 +290,13 @@ function getPluginRuntimeIconPath() {
     let iconPath = pluginInstance.getIcon();
     if (!iconPath || typeof iconPath !== 'string') {
         return null;
+    }
+
+    if (!/^https?:\/\//i.test(iconPath) && typeof pluginInstance.path === 'string' && /^https?:\/\//i.test(pluginInstance.path)) {
+        try {
+            iconPath = new URL(iconPath, pluginInstance.path).toString();
+        } catch (error) {
+        }
     }
 
     return iconPath;
