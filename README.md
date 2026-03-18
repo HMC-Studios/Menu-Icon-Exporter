@@ -1,4 +1,4 @@
-![1773795837621](image/README/1773795837621.png)![1773795866192](image/README/1773795866192.png)![1773795888991](image/README/1773795888991.png)# Menu Icon Exporter for Blockbench
+# Menu Icon Exporter for Blockbench
 
 Export Blockbench models as clean menu or item icons with stable camera framing, live preview, and flexible save options.
 
