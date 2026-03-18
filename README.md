@@ -1,4 +1,4 @@
-# Menu Icon Exporter for Blockbench
+![1773795837621](image/README/1773795837621.png)![1773795866192](image/README/1773795866192.png)![1773795888991](image/README/1773795888991.png)# Menu Icon Exporter for Blockbench
 
 Export Blockbench models as clean menu or item icons with stable camera framing, live preview, and flexible save options.
 
@@ -18,6 +18,7 @@ Version: 1.0.0
   - Ask every export
   - Auto-save to folder (desktop app)
 - Persistent export preferences for save mode and output folder
+- Workspace-aware save mode and output folder when using the Workspaces plugin
 - Quick export actions for 16x16 and 64x64
 - Keyboard shortcut: Ctrl+Shift+I
 
@@ -45,6 +46,13 @@ Version: 1.0.0
    - `Ask every export` to open a save dialog each time
    - `Auto-save to folder` to save directly to a selected folder
 4. Click Confirm.
+
+## Workspace Integration
+
+- If the Workspaces plugin is installed, Menu Icon Exporter stores save mode and output folder per active workspace.
+- Different workspaces can keep different default auto-save folders.
+- Renaming a workspace keeps that workspace's saved default auto-save folder.
+- The `Default` workspace keeps the global fallback behavior.
 
 ## Camera Controls
 
@@ -77,6 +85,8 @@ Quick export uses auto-frame with transparent high-quality defaults.
 - Menu Icon Exporter outputs PNG icons that are usable across Blockbench formats and platforms; platform-specific size, naming, and folder rules still apply.
 - Works with all Blockbench model formats.
 - Auto-save to folder requires the desktop app (filesystem access).
+- Workspace-aware folder defaults require the Workspaces plugin.
+- Workspace rename support preserves the same folder defaults after rename.
 - If an error references a different plugin filename, disable that plugin and retest.
 
 ## Author
